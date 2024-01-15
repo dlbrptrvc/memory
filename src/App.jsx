@@ -13,6 +13,8 @@ function App() {
 		setCardNo(n);
 	}
 
+	function Board() {}
+
 	return (
 		<>
 			<Header></Header>
