@@ -1,0 +1,12 @@
+.header {
+	position: relative;
+	top: 0;
+	width: 100vw;
+	display: flex;
+	justify-content: space-between;
+}
+
+.scoreBoard {
+	display: flex;
+	gap: 5px;
+}
