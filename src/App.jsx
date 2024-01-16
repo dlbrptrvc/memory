@@ -1,26 +1,69 @@
 import { Header } from './Header';
-import { Board } from './Board';
 import { useState } from 'react';
+import { Game } from './Game';
 import './App.css';
 
 function App() {
 	const [gameOn, setGameOn] = useState(false);
-	const [cardNo, setCardNo] = useState(3);
+	const [game, setGame] = useState({});
 
 	function initGame(e) {
 		let n = +e.target.innerHTML;
+		setGame(new Game(n).newRound());
 		setGameOn(true);
-		setCardNo(n);
 	}
 
-	function Board() {}
+	function selectCard(game, e) {
+		let fruit = e.target.dataset.target;
+		if (game.round < game.cardNo) {
+			if (game.available.includes(fruit)) {
+				game.selected.push(fruit);
+				game.available = game.available.filter((item) => {
+					return item !== fruit;
+				});
+				score.innerHTML++;
+				if (highscore.innerHTML < score.innerHTML) {
+					highscore.innerHTML = score.innerHTML;
+				}
+				let next = new Game(game.cardNo);
+				next.round = game.round;
+				next.available = game.available;
+				next.selected = game.selected;
+				setGame(next.newRound());
+			} else {
+				score.innerHTML = '0';
+				setGameOn(false);
+			}
+		} else {
+			score.innerHTML = '0';
+			setGameOn(false);
+		}
+	}
+
+	function Board(props) {
+		return (
+			<div className='board'>
+				{props.game.board.map((item) => (
+					<div
+						className='card'
+						onClick={(e) => {
+							selectCard(props.game, e);
+						}}
+						data-target={item}
+					>
+						{item}
+					</div>
+				))}
+			</div>
+		);
+	}
 
 	return (
 		<>
 			<Header></Header>
 			<div className='main'>
 				{gameOn ? (
-					<Board></Board>
+					<Board game={game}></Board>
 				) : (
 					<div className='frame'>
 						<div className='menu'>
