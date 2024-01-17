@@ -3,8 +3,9 @@
 	place-items: center;
 	justify-content: center;
 	align-items: center;
-	height: 90%;
+	height: fit-content;
 	font-size: 20px;
+	min-height: 100vh;
 }
 
 .menu {
